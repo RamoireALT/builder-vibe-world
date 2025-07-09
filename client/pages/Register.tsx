@@ -215,13 +215,18 @@ export default function Register() {
           </CardHeader>
           <CardContent className="space-y-2 text-sm">
             <p className="text-white/80">
-              • Start with $10,000 virtual currency
+              • Get bonus balance with promo codes
             </p>
             <p className="text-white/80">• Access to all casino games</p>
             <p className="text-white/80">
               • Track your progress and achievements
             </p>
             <p className="text-white/80">• Compete with friends</p>
+            <div className="mt-3 p-2 bg-casino-gold/10 rounded border border-casino-gold/30">
+              <p className="text-casino-gold font-semibold text-xs">
+                💡 Try promo code "Release" for $100 bonus!
+              </p>
+            </div>
           </CardContent>
         </Card>
       </div>
