@@ -38,11 +38,11 @@ import {
 import { toast } from "sonner";
 
 export default function Profile() {
-  const { user, resetBalance, updateBalance, updateUsername } = useUser();
+  const { user, updateUsername } = useUser();
+  const { useReferralCode } = useAuth();
   const [isEditingUsername, setIsEditingUsername] = useState(false);
   const [newUsername, setNewUsername] = useState(user.username);
-  const [showResetDialog, setShowResetDialog] = useState(false);
-  const [customBalance, setCustomBalance] = useState(10000);
+  const [referralCode, setReferralCode] = useState("");
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
