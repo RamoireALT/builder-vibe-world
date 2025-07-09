@@ -37,7 +37,7 @@ import {
 import { toast } from "sonner";
 
 export default function Profile() {
-  const { user, resetBalance, updateBalance } = useUser();
+  const { user, resetBalance, updateBalance, updateUsername } = useUser();
   const [isEditingUsername, setIsEditingUsername] = useState(false);
   const [newUsername, setNewUsername] = useState(user.username);
   const [showResetDialog, setShowResetDialog] = useState(false);
