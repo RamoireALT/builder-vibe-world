@@ -123,6 +123,7 @@ export default function Mines() {
       cell.state = "mine";
       setBoard(newBoard);
       setGameOver(true);
+      recordLoss(bet, "Mines"); // Record the loss
       toast.error("💥 You hit a mine! Game over!");
 
       // Reveal all mines
