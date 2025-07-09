@@ -92,6 +92,27 @@ export default {
             height: "0",
           },
         },
+        "spin-slow": {
+          to: {
+            transform: "rotate(360deg)",
+          },
+        },
+        glow: {
+          "0%, 100%": {
+            boxShadow: "0 0 5px currentColor",
+          },
+          "50%": {
+            boxShadow: "0 0 20px currentColor, 0 0 30px currentColor",
+          },
+        },
+        "pulse-casino": {
+          "0%, 100%": {
+            opacity: "1",
+          },
+          "50%": {
+            opacity: "0.7",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
