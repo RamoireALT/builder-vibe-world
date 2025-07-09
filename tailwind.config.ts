@@ -57,6 +57,18 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        casino: {
+          gold: "hsl(var(--casino-gold))",
+          "gold-dark": "hsl(var(--casino-gold-dark))",
+          red: "hsl(var(--casino-red))",
+          "red-dark": "hsl(var(--casino-red-dark))",
+          green: "hsl(var(--casino-green))",
+          "green-dark": "hsl(var(--casino-green-dark))",
+          purple: "hsl(var(--casino-purple))",
+          "purple-dark": "hsl(var(--casino-purple-dark))",
+          black: "hsl(var(--casino-black))",
+          "black-light": "hsl(var(--casino-black-light))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
