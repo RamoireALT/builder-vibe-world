@@ -159,7 +159,7 @@ export default function Mines() {
     if (!gameStarted || gameOver || revealedGems === 0) return;
 
     const winAmount = Math.floor(bet * currentMultiplier);
-    recordWin(winAmount); // This adds to balance and totalWinnings
+    recordWin(winAmount - bet, "Mines", bet, currentMultiplier); // Net win
 
     setGameStarted(false);
     setGameOver(true);
