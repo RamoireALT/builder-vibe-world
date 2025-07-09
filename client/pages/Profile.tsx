@@ -52,7 +52,7 @@ export default function Profile() {
 
   const handleUsernameChange = () => {
     if (newUsername.trim() && newUsername !== user.username) {
-      // Update username in context (we'd need to add this function)
+      updateUsername(newUsername);
       setIsEditingUsername(false);
       toast.success(`Username updated to ${newUsername}!`);
     } else {
