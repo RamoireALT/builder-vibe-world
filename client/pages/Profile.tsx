@@ -357,6 +357,9 @@ export default function Profile() {
                 )}
               </CardContent>
             </Card>
+
+            {/* Game History */}
+            <GameHistory gameHistory={user.gameHistory} />
           </div>
 
           {/* Sidebar */}
