@@ -88,11 +88,31 @@ const ADMIN_EMAIL = "admin@wendercasino.com";
 const ADMIN_PASSWORD = "admin123";
 
 const INITIAL_USER_DATA = {
-  balance: 10000,
+  balance: 0, // Users start with $0 now
   totalWinnings: 0,
   totalLosses: 0,
   gamesPlayed: 0,
   achievements: [],
+  gameHistory: [],
+  winStreak: 0,
+  maxWinStreak: 0,
+  lossStreak: 0,
+  maxLossStreak: 0,
+};
+
+const ACHIEVEMENTS = {
+  "First Win": "Win your first game",
+  "Its Getting Somewhere": "Win 10 games",
+  "Hot Potato": "Win 5 games in a row without losing",
+  Inferno: "Win 20 games in a row without losing",
+  "Big Win": "Earn total $100",
+  Massive: "Earn total $2,000",
+  "True Gamer": "Play 100 games total",
+  Influence: "Get your own referral code by devs",
+  Admin: "Only on admin accounts",
+  "Its Over 9000": "Get balance of $9,000 at least 1 time",
+  "THESE GAMES ARE RIGGED!": "Lose 10 games in a row",
+  "More Coming Later": "Secret achievement",
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
