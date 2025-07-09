@@ -62,15 +62,14 @@ export default function Profile() {
     }
   };
 
-  const handleBalanceReset = () => {
-    resetBalance();
-    setShowResetDialog(false);
-    toast.success("Balance reset to $10,000!");
-  };
-
-  const handleCustomBalance = () => {
-    updateBalance(customBalance - user.balance);
-    toast.success(`Balance set to ${formatCurrency(customBalance)}!`);
+  const handleUseReferralCode = () => {
+    const result = useReferralCode(user.id, referralCode);
+    if (result.success) {
+      toast.success(result.message);
+      setReferralCode("");
+    } else {
+      toast.error(result.message);
+    }
   };
 
   const calculateWinRate = () => {
