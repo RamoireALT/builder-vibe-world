@@ -59,6 +59,12 @@ export default function AdminPanel() {
     totalLosses: 0,
     gamesPlayed: 0,
   });
+  const [showCreateCodeDialog, setShowCreateCodeDialog] = useState(false);
+  const [newCodeForm, setNewCodeForm] = useState({
+    code: "",
+    balance: 100,
+    createdFor: "",
+  });
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
