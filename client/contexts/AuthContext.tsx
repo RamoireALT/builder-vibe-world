@@ -234,10 +234,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     username: string,
     email: string,
     password: string,
-  ): Promise<boolean> => {
+    promoCode?: string,
+  ): Promise<{ success: boolean; message: string }> => {
     // Check if email already exists
     if (users.find((u) => u.email === email)) {
-      return false;
+      return { success: false, message: "Email already exists" };
+    }
+
+    let bonusBalance = 0;
+    let usedPromoCode = undefined;
+
+    // Check promo code if provided
+    if (promoCode) {
+      const validCode = referralCodes.find(
+        (r) => r.code === promoCode && r.isActive && !r.usedBy,
+      );
+      if (validCode) {
+        bonusBalance = validCode.balance;
+        usedPromoCode = promoCode;
+
+        // Mark promo code as used (for single-use codes)
+        setReferralCodes((prev) =>
+          prev.map((r) =>
+            r.code === promoCode
+              ? { ...r, usedBy: email, usedAt: new Date().toISOString() }
+              : r,
+          ),
+        );
+      } else {
+        return {
+          success: false,
+          message: "Invalid or already used promo code",
+        };
+      }
     }
 
     const newUser: User = {
@@ -245,6 +274,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       username,
       email,
       ...INITIAL_USER_DATA,
+      balance: bonusBalance,
+      usedReferralCode: usedPromoCode,
       isAdmin: false,
       createdAt: new Date().toISOString(),
       lastLogin: new Date().toISOString(),
@@ -252,7 +283,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setUsers((prev) => [...prev, newUser]);
     setUser(newUser);
-    return true;
+    return {
+      success: true,
+      message:
+        bonusBalance > 0
+          ? `Account created! You received $${bonusBalance} from promo code!`
+          : "Account created successfully!",
+    };
   };
 
   const logout = () => {
