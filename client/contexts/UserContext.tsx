@@ -101,6 +101,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         recordLoss,
         recordGame,
         resetBalance,
+        updateUsername,
       }}
     >
       {children}
