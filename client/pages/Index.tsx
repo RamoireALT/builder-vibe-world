@@ -105,14 +105,35 @@ export default function Index() {
                 {formatCurrency(user.balance)}
               </p>
             </div>
-            <Link to="/profile">
+            <div className="flex space-x-2">
+              {isAdmin && (
+                <Link to="/admin">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-casino-red text-casino-red hover:bg-casino-red hover:text-white"
+                  >
+                    <Shield className="h-4 w-4 mr-2" />
+                    Admin
+                  </Button>
+                </Link>
+              )}
+              <Link to="/profile">
+                <Button
+                  variant="outline"
+                  className="border-casino-gold text-casino-gold hover:bg-casino-gold hover:text-casino-black"
+                >
+                  Profile
+                </Button>
+              </Link>
               <Button
                 variant="outline"
-                className="border-casino-gold text-casino-gold hover:bg-casino-gold hover:text-casino-black"
+                onClick={logout}
+                className="border-casino-purple text-casino-purple hover:bg-casino-purple hover:text-white"
               >
-                Profile
+                <LogOut className="h-4 w-4" />
               </Button>
-            </Link>
+            </div>
           </div>
         </div>
       </header>
