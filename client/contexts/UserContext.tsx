@@ -23,6 +23,7 @@ interface UserContextType {
   recordLoss: (amount: number) => void;
   recordGame: () => void;
   resetBalance: () => void;
+  updateUsername: (username: string) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
