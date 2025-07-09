@@ -22,24 +22,94 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <UserProvider>
+    <AuthProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/games/coinflip" element={<Coinflip />} />
-            <Route path="/games/mines" element={<ComingSoon />} />
-            <Route path="/games/tower" element={<ComingSoon />} />
-            <Route path="/games/blackjack" element={<ComingSoon />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            {/* Public routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            {/* Protected routes */}
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <UserProvider>
+                    <Index />
+                  </UserProvider>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <UserProvider>
+                    <Profile />
+                  </UserProvider>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/games/coinflip"
+              element={
+                <ProtectedRoute>
+                  <UserProvider>
+                    <Coinflip />
+                  </UserProvider>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/games/mines"
+              element={
+                <ProtectedRoute>
+                  <UserProvider>
+                    <ComingSoon />
+                  </UserProvider>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/games/tower"
+              element={
+                <ProtectedRoute>
+                  <UserProvider>
+                    <ComingSoon />
+                  </UserProvider>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/games/blackjack"
+              element={
+                <ProtectedRoute>
+                  <UserProvider>
+                    <ComingSoon />
+                  </UserProvider>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Admin routes */}
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute adminOnly>
+                  <AdminPanel />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Catch all */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
-    </UserProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 
