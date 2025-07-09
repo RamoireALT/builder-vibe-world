@@ -148,6 +148,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email: ADMIN_EMAIL,
         ...INITIAL_USER_DATA,
         balance: 1000000, // Admin starts with more money
+        achievements: ["Admin"], // Admin achievement
         isAdmin: true,
         createdAt: new Date().toISOString(),
         lastLogin: new Date().toISOString(),
@@ -155,6 +156,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const updatedUsers = [...parsedUsers, adminUser];
       setUsers(updatedUsers);
       localStorage.setItem("casino-users", JSON.stringify(updatedUsers));
+    }
+
+    // Create default "Release" promo code if it doesn't exist
+    if (!parsedReferralCodes.find((r: ReferralCode) => r.code === "Release")) {
+      const releaseCode: ReferralCode = {
+        id: "release-promo",
+        code: "Release",
+        createdBy: "admin",
+        balance: 100,
+        isActive: true,
+        createdAt: new Date().toISOString(),
+      };
+      const updatedCodes = [...parsedReferralCodes, releaseCode];
+      setReferralCodes(updatedCodes);
+      localStorage.setItem(
+        "casino-referral-codes",
+        JSON.stringify(updatedCodes),
+      );
     }
   }, []);
 
