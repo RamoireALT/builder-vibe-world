@@ -66,13 +66,13 @@ export default function Coinflip() {
       const winnings = won ? bet * 2 : 0; // 2x payout for winning
 
       if (won) {
-        recordWin(bet); // Net win (bet amount)
+        recordWin(bet, "Coinflip", bet, 2); // Net win (bet amount)
         setLastWin(winnings);
         toast.success(`🎉 You won ${formatCurrency(winnings)}!`, {
           description: `You guessed ${selectedSide} correctly!`,
         });
       } else {
-        recordLoss(bet);
+        recordLoss(bet, "Coinflip");
         toast.error(`😔 You lost ${formatCurrency(bet)}`, {
           description: `It was ${result}, you guessed ${selectedSide}`,
         });
