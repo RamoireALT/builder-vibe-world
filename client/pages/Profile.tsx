@@ -30,11 +30,11 @@ import {
   TrendingUp,
   TrendingDown,
   Trophy,
-  RotateCcw,
   Edit3,
   Save,
   X,
 } from "lucide-react";
+import { GameHistory } from "../components/GameHistory";
 import { toast } from "sonner";
 
 export default function Profile() {
