@@ -25,6 +25,7 @@ import {
 
 export default function Index() {
   const { user } = useUser();
+  const { isAdmin, logout } = useAuth();
 
   const games = [
     {
