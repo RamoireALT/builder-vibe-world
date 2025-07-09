@@ -101,12 +101,14 @@ export default function Index() {
                 {formatCurrency(user.balance)}
               </p>
             </div>
-            <Button
-              variant="outline"
-              className="border-casino-gold text-casino-gold hover:bg-casino-gold hover:text-casino-black"
-            >
-              Profile
-            </Button>
+            <Link to="/profile">
+              <Button
+                variant="outline"
+                className="border-casino-gold text-casino-gold hover:bg-casino-gold hover:text-casino-black"
+              >
+                Profile
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
