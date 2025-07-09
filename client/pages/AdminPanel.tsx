@@ -42,7 +42,15 @@ import {
 import { toast } from "sonner";
 
 export default function AdminPanel() {
-  const { user, users, updateUserStats, deleteUser, logout } = useAuth();
+  const {
+    user,
+    users,
+    referralCodes,
+    updateUserStats,
+    deleteUser,
+    createReferralCode,
+    logout,
+  } = useAuth();
   const [editingUser, setEditingUser] = useState<string | null>(null);
   const [editForm, setEditForm] = useState({
     username: "",
