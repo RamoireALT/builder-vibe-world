@@ -14,6 +14,7 @@ import Register from "./pages/Register";
 import Index from "./pages/Index";
 import Coinflip from "./pages/Coinflip";
 import Profile from "./pages/Profile";
+import Mines from "./pages/Mines";
 import ComingSoon from "./pages/ComingSoon";
 import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
