@@ -85,6 +85,13 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }));
   };
 
+  const updateUsername = (username: string) => {
+    setUser((prev) => ({
+      ...prev,
+      username: username.trim(),
+    }));
+  };
+
   return (
     <UserContext.Provider
       value={{
