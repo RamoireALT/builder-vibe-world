@@ -110,6 +110,27 @@ export default function AdminPanel() {
     toast.success("User deleted successfully!");
   };
 
+  const handleCreateReferralCode = () => {
+    if (!newCodeForm.code || newCodeForm.balance <= 0) {
+      toast.error("Please enter a valid code and balance");
+      return;
+    }
+
+    const success = createReferralCode(
+      newCodeForm.code,
+      newCodeForm.balance,
+      newCodeForm.createdFor || undefined,
+    );
+
+    if (success) {
+      toast.success("Referral code created successfully!");
+      setShowCreateCodeDialog(false);
+      setNewCodeForm({ code: "", balance: 100, createdFor: "" });
+    } else {
+      toast.error("Referral code already exists!");
+    }
+  };
+
   const regularUsers = users.filter((u) => !u.isAdmin);
   const totalUsers = users.length;
   const totalBalance = users.reduce((sum, u) => sum + u.balance, 0);
