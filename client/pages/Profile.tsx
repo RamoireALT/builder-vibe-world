@@ -304,7 +304,7 @@ export default function Profile() {
                   <div className="flex justify-between">
                     <span className="text-white/70">Achievements:</span>
                     <span className="text-casino-gold font-semibold">
-                      {getAchievements().length}
+                      {user.achievements.length}
                     </span>
                   </div>
                 </div>
