@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext";
 import Index from "./pages/Index";
-import SlotMachine from "./pages/SlotMachine";
+import Coinflip from "./pages/Coinflip";
 import ComingSoon from "./pages/ComingSoon";
 import NotFound from "./pages/NotFound";
 
