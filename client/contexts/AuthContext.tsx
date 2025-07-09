@@ -52,6 +52,7 @@ export interface User {
 interface AuthContextType {
   user: User | null;
   users: User[];
+  referralCodes: ReferralCode[];
   isAuthenticated: boolean;
   isAdmin: boolean;
   login: (email: string, password: string) => Promise<boolean>;
@@ -59,9 +60,24 @@ interface AuthContextType {
     username: string,
     email: string,
     password: string,
-  ) => Promise<boolean>;
+    promoCode?: string,
+  ) => Promise<{ success: boolean; message: string }>;
   logout: () => void;
   updateUserStats: (userId: string, updates: Partial<User>) => void;
+  addGameToHistory: (
+    userId: string,
+    gameData: Omit<GameHistory, "id" | "timestamp">,
+  ) => void;
+  createReferralCode: (
+    code: string,
+    balance: number,
+    createdFor?: string,
+  ) => boolean;
+  useReferralCode: (
+    userId: string,
+    code: string,
+  ) => { success: boolean; message: string };
+  checkAchievements: (userId: string) => void;
   deleteUser: (userId: string) => void;
   getAllUsers: () => User[];
 }
