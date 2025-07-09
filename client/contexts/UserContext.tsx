@@ -14,7 +14,7 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const { user, updateUserStats } = useAuth();
+  const { user, updateUserStats, addGameToHistory } = useAuth();
 
   if (!user) {
     // This should be handled by the auth guard
