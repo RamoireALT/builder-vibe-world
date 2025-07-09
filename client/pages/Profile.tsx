@@ -82,15 +82,40 @@ export default function Profile() {
     return Math.round((estimatedWins / user.gamesPlayed) * 100);
   };
 
-  const getAchievements = () => {
-    const achievements = [];
-    if (user.gamesPlayed >= 10) achievements.push("Beginner");
-    if (user.gamesPlayed >= 50) achievements.push("Regular Player");
-    if (user.gamesPlayed >= 100) achievements.push("High Roller");
-    if (user.totalWinnings >= 5000) achievements.push("Big Winner");
-    if (user.totalWinnings >= 20000) achievements.push("Millionaire");
-    if (user.balance >= 50000) achievements.push("Wealthy");
-    return achievements;
+  const getAchievementDescription = (achievement: string) => {
+    const descriptions: { [key: string]: string } = {
+      "First Win": "Win your first game",
+      "Its Getting Somewhere": "Win 10 games",
+      "Hot Potato": "Win 5 games in a row without losing",
+      Inferno: "Win 20 games in a row without losing",
+      "Big Win": "Earn total $100",
+      Massive: "Earn total $2,000",
+      "True Gamer": "Play 100 games total",
+      Influence: "Get your own referral code by devs",
+      Admin: "Only on admin accounts",
+      "Its Over 9000": "Get balance of $9,000 at least 1 time",
+      "THESE GAMES ARE RIGGED!": "Lose 10 games in a row",
+      "More Coming Later": "Secret achievement",
+    };
+    return descriptions[achievement] || "Achievement unlocked!";
+  };
+
+  const getAchievementIcon = (achievement: string) => {
+    const icons: { [key: string]: string } = {
+      "First Win": "🥇",
+      "Its Getting Somewhere": "📈",
+      "Hot Potato": "🔥",
+      Inferno: "🌋",
+      "Big Win": "💰",
+      Massive: "💎",
+      "True Gamer": "🎮",
+      Influence: "⭐",
+      Admin: "👑",
+      "Its Over 9000": "⚡",
+      "THESE GAMES ARE RIGGED!": "😤",
+      "More Coming Later": "🔮",
+    };
+    return icons[achievement] || "🏆";
   };
 
   return (
