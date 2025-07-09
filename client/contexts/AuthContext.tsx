@@ -313,6 +313,197 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const addGameToHistory = (
+    userId: string,
+    gameData: Omit<GameHistory, "id" | "timestamp">,
+  ) => {
+    const gameEntry: GameHistory = {
+      ...gameData,
+      id: Date.now().toString(),
+      timestamp: new Date().toISOString(),
+    };
+
+    setUsers((prev) =>
+      prev.map((u) => {
+        if (u.id === userId) {
+          const newHistory = [gameEntry, ...u.gameHistory].slice(0, 100); // Keep last 100 games
+          const newUser = { ...u, gameHistory: newHistory };
+
+          // Update streaks
+          if (gameData.result === "win") {
+            newUser.winStreak = u.winStreak + 1;
+            newUser.lossStreak = 0;
+            newUser.maxWinStreak = Math.max(newUser.winStreak, u.maxWinStreak);
+          } else {
+            newUser.lossStreak = u.lossStreak + 1;
+            newUser.winStreak = 0;
+            newUser.maxLossStreak = Math.max(
+              newUser.lossStreak,
+              u.maxLossStreak,
+            );
+          }
+
+          return newUser;
+        }
+        return u;
+      }),
+    );
+
+    // Update current user if it's the same user
+    if (user && user.id === userId) {
+      checkAchievements(userId);
+    }
+  };
+
+  const createReferralCode = (
+    code: string,
+    balance: number,
+    createdFor?: string,
+  ): boolean => {
+    if (referralCodes.find((r) => r.code === code)) {
+      return false; // Code already exists
+    }
+
+    const newCode: ReferralCode = {
+      id: Date.now().toString(),
+      code,
+      createdBy: user?.id || "admin",
+      createdFor,
+      balance,
+      isActive: true,
+      createdAt: new Date().toISOString(),
+    };
+
+    setReferralCodes((prev) => [...prev, newCode]);
+    return true;
+  };
+
+  const useReferralCode = (
+    userId: string,
+    code: string,
+  ): { success: boolean; message: string } => {
+    const foundCode = referralCodes.find((r) => r.code === code && r.isActive);
+
+    if (!foundCode) {
+      return { success: false, message: "Invalid referral code" };
+    }
+
+    if (foundCode.usedBy) {
+      return { success: false, message: "Referral code already used" };
+    }
+
+    if (foundCode.createdFor && foundCode.createdFor !== userId) {
+      return { success: false, message: "This referral code is not for you" };
+    }
+
+    // Apply the referral code
+    updateUserStats(userId, {
+      balance: (user?.balance || 0) + foundCode.balance,
+      usedReferralCode: code,
+    });
+
+    // Mark code as used
+    setReferralCodes((prev) =>
+      prev.map((r) =>
+        r.code === code
+          ? { ...r, usedBy: userId, usedAt: new Date().toISOString() }
+          : r,
+      ),
+    );
+
+    return {
+      success: true,
+      message: `Successfully redeemed $${foundCode.balance}!`,
+    };
+  };
+
+  const checkAchievements = (userId: string) => {
+    const targetUser = users.find((u) => u.id === userId);
+    if (!targetUser) return;
+
+    const newAchievements = [...targetUser.achievements];
+    let achievementsAdded = false;
+
+    // Check each achievement
+    if (
+      targetUser.totalWinnings > 0 &&
+      !newAchievements.includes("First Win")
+    ) {
+      newAchievements.push("First Win");
+      achievementsAdded = true;
+    }
+
+    if (
+      targetUser.gamesPlayed >= 10 &&
+      !newAchievements.includes("Its Getting Somewhere")
+    ) {
+      newAchievements.push("Its Getting Somewhere");
+      achievementsAdded = true;
+    }
+
+    if (
+      targetUser.maxWinStreak >= 5 &&
+      !newAchievements.includes("Hot Potato")
+    ) {
+      newAchievements.push("Hot Potato");
+      achievementsAdded = true;
+    }
+
+    if (targetUser.maxWinStreak >= 20 && !newAchievements.includes("Inferno")) {
+      newAchievements.push("Inferno");
+      achievementsAdded = true;
+    }
+
+    if (
+      targetUser.totalWinnings >= 100 &&
+      !newAchievements.includes("Big Win")
+    ) {
+      newAchievements.push("Big Win");
+      achievementsAdded = true;
+    }
+
+    if (
+      targetUser.totalWinnings >= 2000 &&
+      !newAchievements.includes("Massive")
+    ) {
+      newAchievements.push("Massive");
+      achievementsAdded = true;
+    }
+
+    if (
+      targetUser.gamesPlayed >= 100 &&
+      !newAchievements.includes("True Gamer")
+    ) {
+      newAchievements.push("True Gamer");
+      achievementsAdded = true;
+    }
+
+    if (
+      targetUser.balance >= 9000 &&
+      !newAchievements.includes("Its Over 9000")
+    ) {
+      newAchievements.push("Its Over 9000");
+      achievementsAdded = true;
+    }
+
+    if (
+      targetUser.maxLossStreak >= 10 &&
+      !newAchievements.includes("THESE GAMES ARE RIGGED!")
+    ) {
+      newAchievements.push("THESE GAMES ARE RIGGED!");
+      achievementsAdded = true;
+    }
+
+    if (targetUser.referralCode && !newAchievements.includes("Influence")) {
+      newAchievements.push("Influence");
+      achievementsAdded = true;
+    }
+
+    if (achievementsAdded) {
+      updateUserStats(userId, { achievements: newAchievements });
+    }
+  };
+
   const deleteUser = (userId: string) => {
     if (userId === "admin") return; // Can't delete admin
 
