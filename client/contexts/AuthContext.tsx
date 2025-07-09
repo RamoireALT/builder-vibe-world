@@ -525,12 +525,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       value={{
         user,
         users,
+        referralCodes,
         isAuthenticated,
         isAdmin,
         login,
         register,
         logout,
         updateUserStats,
+        addGameToHistory,
+        createReferralCode,
+        useReferralCode,
+        checkAchievements,
         deleteUser,
         getAllUsers,
       }}
