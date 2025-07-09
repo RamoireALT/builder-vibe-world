@@ -118,6 +118,7 @@ const ACHIEVEMENTS = {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [users, setUsers] = useState<User[]>([]);
+  const [referralCodes, setReferralCodes] = useState<ReferralCode[]>([]);
 
   useEffect(() => {
     // Load users from localStorage
