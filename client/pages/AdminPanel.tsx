@@ -225,6 +225,157 @@ export default function AdminPanel() {
           </Card>
         </div>
 
+        {/* Referral Codes Management */}
+        <Card className="bg-casino-black/60 border-casino-gold/30">
+          <CardHeader>
+            <CardTitle className="text-casino-gold flex items-center justify-between">
+              <span>Referral Codes</span>
+              <Dialog
+                open={showCreateCodeDialog}
+                onOpenChange={setShowCreateCodeDialog}
+              >
+                <DialogTrigger asChild>
+                  <Button
+                    size="sm"
+                    className="bg-casino-purple hover:bg-casino-purple-dark"
+                  >
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Create Code
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-casino-black border-casino-gold/30">
+                  <DialogHeader>
+                    <DialogTitle className="text-casino-gold">
+                      Create Referral Code
+                    </DialogTitle>
+                    <DialogDescription className="text-white/70">
+                      Create a new referral code for users to claim bonuses
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label className="text-white">Code</Label>
+                      <Input
+                        value={newCodeForm.code}
+                        onChange={(e) =>
+                          setNewCodeForm({
+                            ...newCodeForm,
+                            code: e.target.value,
+                          })
+                        }
+                        placeholder="Enter unique code"
+                        className="bg-casino-black-light border-casino-gold/30 text-white"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-white">Balance Bonus</Label>
+                      <Input
+                        type="number"
+                        value={newCodeForm.balance}
+                        onChange={(e) =>
+                          setNewCodeForm({
+                            ...newCodeForm,
+                            balance: Number(e.target.value),
+                          })
+                        }
+                        placeholder="100"
+                        className="bg-casino-black-light border-casino-gold/30 text-white"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-white">
+                        Created For (Optional)
+                      </Label>
+                      <Input
+                        value={newCodeForm.createdFor}
+                        onChange={(e) =>
+                          setNewCodeForm({
+                            ...newCodeForm,
+                            createdFor: e.target.value,
+                          })
+                        }
+                        placeholder="Specific user ID (leave empty for anyone)"
+                        className="bg-casino-black-light border-casino-gold/30 text-white"
+                      />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowCreateCodeDialog(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={handleCreateReferralCode}
+                      className="bg-casino-purple hover:bg-casino-purple-dark"
+                    >
+                      Create Code
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </CardTitle>
+            <CardDescription className="text-white/70">
+              Manage referral codes and promo codes
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-casino-gold/20">
+                    <TableHead className="text-casino-gold">Code</TableHead>
+                    <TableHead className="text-casino-gold">Balance</TableHead>
+                    <TableHead className="text-casino-gold">
+                      Created For
+                    </TableHead>
+                    <TableHead className="text-casino-gold">Used By</TableHead>
+                    <TableHead className="text-casino-gold">Status</TableHead>
+                    <TableHead className="text-casino-gold">Created</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {referralCodes.map((code) => (
+                    <TableRow
+                      key={code.id}
+                      className="border-casino-gold/10 hover:bg-casino-black/30"
+                    >
+                      <TableCell className="text-white font-semibold">
+                        {code.code}
+                      </TableCell>
+                      <TableCell className="text-casino-green">
+                        {formatCurrency(code.balance)}
+                      </TableCell>
+                      <TableCell className="text-white/80">
+                        {code.createdFor || "Anyone"}
+                      </TableCell>
+                      <TableCell className="text-white/80">
+                        {code.usedBy || "Not used"}
+                      </TableCell>
+                      <TableCell>
+                        <Badge
+                          variant="secondary"
+                          className={
+                            code.usedBy
+                              ? "bg-casino-red/20 text-casino-red"
+                              : "bg-casino-green/20 text-casino-green"
+                          }
+                        >
+                          {code.usedBy ? "Used" : "Active"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-white/70">
+                        {formatDate(code.createdAt)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* User Management Table */}
         <Card className="bg-casino-black/60 border-casino-gold/30">
           <CardHeader>
