@@ -69,7 +69,7 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <UserProvider>
-                    <ComingSoon />
+                    <Mines />
                   </UserProvider>
                 </ProtectedRoute>
               }
