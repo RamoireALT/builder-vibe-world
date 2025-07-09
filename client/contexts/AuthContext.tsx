@@ -183,6 +183,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [users]);
 
   useEffect(() => {
+    // Save referral codes to localStorage whenever referralCodes array changes
+    localStorage.setItem(
+      "casino-referral-codes",
+      JSON.stringify(referralCodes),
+    );
+  }, [referralCodes]);
+
+  useEffect(() => {
     // Save current user to localStorage
     if (user) {
       localStorage.setItem("casino-current-user", JSON.stringify(user));
