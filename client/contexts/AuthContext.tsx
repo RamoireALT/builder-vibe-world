@@ -126,6 +126,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const parsedUsers = savedUsers ? JSON.parse(savedUsers) : [];
     setUsers(parsedUsers);
 
+    // Load referral codes from localStorage
+    const savedReferralCodes = localStorage.getItem("casino-referral-codes");
+    const parsedReferralCodes = savedReferralCodes
+      ? JSON.parse(savedReferralCodes)
+      : [];
+    setReferralCodes(parsedReferralCodes);
+
     // Check if user is logged in
     const savedCurrentUser = localStorage.getItem("casino-current-user");
     if (savedCurrentUser) {
