@@ -103,7 +103,7 @@ export default function Mines() {
       return;
     }
 
-    recordLoss(bet); // Take the bet amount upfront
+    // We'll record the loss only if they hit a mine
     recordGame();
     setTotalGames((prev) => prev + 1);
     initializeBoard();
