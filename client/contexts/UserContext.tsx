@@ -27,17 +27,39 @@ export function UserProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const recordWin = (amount: number) => {
+  const recordWin = (
+    amount: number,
+    game: string = "Unknown",
+    bet: number = 0,
+    multiplier?: number,
+  ) => {
     updateUserStats(user.id, {
       balance: user.balance + amount,
       totalWinnings: user.totalWinnings + amount,
     });
+
+    // Add to game history
+    addGameToHistory(user.id, {
+      game,
+      bet,
+      result: "win",
+      winAmount: amount,
+      multiplier,
+    });
   };
 
-  const recordLoss = (amount: number) => {
+  const recordLoss = (amount: number, game: string = "Unknown") => {
     updateUserStats(user.id, {
       balance: Math.max(0, user.balance - amount),
       totalLosses: user.totalLosses + amount,
+    });
+
+    // Add to game history
+    addGameToHistory(user.id, {
+      game,
+      bet: amount,
+      result: "loss",
+      winAmount: 0,
     });
   };
 
