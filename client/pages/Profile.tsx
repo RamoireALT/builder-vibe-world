@@ -286,89 +286,50 @@ export default function Profile() {
               </CardContent>
             </Card>
 
-            {/* Balance Management */}
+            {/* Referral Code Usage */}
             <Card className="bg-casino-black/60 border-casino-gold/30 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="text-casino-gold">
-                  Balance Management
+                  Referral Code
                 </CardTitle>
                 <CardDescription className="text-white/70">
-                  Manage your virtual currency
+                  Use a referral code to get bonus balance
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {user.usedReferralCode ? (
+                  <div className="p-4 bg-casino-green/20 rounded-lg border border-casino-green/50">
+                    <p className="text-casino-green font-semibold">
+                      ✅ You used referral code: {user.usedReferralCode}
+                    </p>
+                    <p className="text-sm text-white/70">
+                      You can only use one referral code per account
+                    </p>
+                  </div>
+                ) : (
                   <div className="space-y-2">
-                    <Label htmlFor="customBalance" className="text-white">
-                      Set Custom Balance
+                    <Label htmlFor="referralCode" className="text-white">
+                      Enter Referral Code
                     </Label>
                     <div className="flex space-x-2">
                       <Input
-                        id="customBalance"
-                        type="number"
-                        min="0"
-                        max="1000000"
-                        value={customBalance}
-                        onChange={(e) =>
-                          setCustomBalance(Number(e.target.value))
-                        }
+                        id="referralCode"
+                        type="text"
+                        placeholder="Enter referral code"
+                        value={referralCode}
+                        onChange={(e) => setReferralCode(e.target.value)}
                         className="bg-casino-black-light border-casino-gold/30 text-white"
                       />
                       <Button
-                        onClick={handleCustomBalance}
+                        onClick={handleUseReferralCode}
+                        disabled={!referralCode.trim()}
                         className="bg-casino-gold hover:bg-casino-gold-dark text-casino-black"
                       >
-                        Set
+                        Use Code
                       </Button>
                     </div>
                   </div>
-
-                  <div className="space-y-2">
-                    <Label className="text-white">Quick Actions</Label>
-                    <div className="flex space-x-2">
-                      <Dialog
-                        open={showResetDialog}
-                        onOpenChange={setShowResetDialog}
-                      >
-                        <DialogTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className="border-casino-red text-casino-red hover:bg-casino-red hover:text-white"
-                          >
-                            <RotateCcw className="h-4 w-4 mr-2" />
-                            Reset Balance
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent className="bg-casino-black border-casino-gold/30">
-                          <DialogHeader>
-                            <DialogTitle className="text-casino-gold">
-                              Reset Balance
-                            </DialogTitle>
-                            <DialogDescription className="text-white/70">
-                              This will reset your balance back to $10,000. This
-                              action cannot be undone.
-                            </DialogDescription>
-                          </DialogHeader>
-                          <DialogFooter>
-                            <Button
-                              variant="outline"
-                              onClick={() => setShowResetDialog(false)}
-                              className="border-casino-gold/50 text-casino-gold hover:bg-casino-gold/20"
-                            >
-                              Cancel
-                            </Button>
-                            <Button
-                              onClick={handleBalanceReset}
-                              className="bg-casino-red hover:bg-casino-red-dark"
-                            >
-                              Reset Balance
-                            </Button>
-                          </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
-                    </div>
-                  </div>
-                </div>
+                )}
               </CardContent>
             </Card>
           </div>
