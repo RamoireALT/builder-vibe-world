@@ -24,6 +24,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/games/coinflip" element={<Coinflip />} />
             <Route path="/games/mines" element={<ComingSoon />} />
             <Route path="/games/tower" element={<ComingSoon />} />
