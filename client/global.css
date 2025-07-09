@@ -54,6 +54,18 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Casino Theme Colors */
+    --casino-gold: 45 100% 65%;
+    --casino-gold-dark: 43 100% 50%;
+    --casino-red: 0 84% 60%;
+    --casino-red-dark: 0 84% 45%;
+    --casino-green: 120 100% 40%;
+    --casino-green-dark: 120 100% 25%;
+    --casino-purple: 270 95% 65%;
+    --casino-purple-dark: 270 95% 50%;
+    --casino-black: 0 0% 8%;
+    --casino-black-light: 0 0% 15%;
   }
 
   .dark {
