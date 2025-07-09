@@ -85,16 +85,20 @@ export default function ComingSoon() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
                 <div className="p-4 bg-casino-black-light/50 rounded-lg border border-casino-gold/20">
-                  <h3 className="font-bold text-casino-gold mb-2">Blackjack</h3>
-                  <p className="text-sm text-white/70">Classic 21 card game</p>
+                  <h3 className="font-bold text-casino-gold mb-2">Mines</h3>
+                  <p className="text-sm text-white/70">
+                    Navigate through a minefield
+                  </p>
                 </div>
                 <div className="p-4 bg-casino-black-light/50 rounded-lg border border-casino-gold/20">
-                  <h3 className="font-bold text-casino-gold mb-2">Poker</h3>
-                  <p className="text-sm text-white/70">Texas Hold'em style</p>
+                  <h3 className="font-bold text-casino-gold mb-2">Tower</h3>
+                  <p className="text-sm text-white/70">
+                    Climb the tower to win
+                  </p>
                 </div>
                 <div className="p-4 bg-casino-black-light/50 rounded-lg border border-casino-gold/20">
-                  <h3 className="font-bold text-casino-gold mb-2">Roulette</h3>
-                  <p className="text-sm text-white/70">European wheel style</p>
+                  <h3 className="font-bold text-casino-gold mb-2">BlackJack</h3>
+                  <p className="text-sm text-white/70">Beat the dealer at 21</p>
                 </div>
               </div>
 
