@@ -1,20 +1,5 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
-
-export interface User {
-  id: string;
-  username: string;
-  balance: number;
-  totalWinnings: number;
-  totalLosses: number;
-  gamesPlayed: number;
-  achievements: string[];
-}
+import { createContext, useContext, ReactNode } from "react";
+import { useAuth, User } from "./AuthContext";
 
 interface UserContextType {
   user: User;
@@ -28,68 +13,50 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-const INITIAL_USER: User = {
-  id: "1",
-  username: "Player",
-  balance: 10000, // Starting with $10,000 virtual currency
-  totalWinnings: 0,
-  totalLosses: 0,
-  gamesPlayed: 0,
-  achievements: [],
-};
-
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User>(() => {
-    const savedUser = localStorage.getItem("casino-user");
-    return savedUser ? JSON.parse(savedUser) : INITIAL_USER;
-  });
+  const { user, updateUserStats } = useAuth();
 
-  useEffect(() => {
-    localStorage.setItem("casino-user", JSON.stringify(user));
-  }, [user]);
+  if (!user) {
+    // This should be handled by the auth guard
+    throw new Error("UserProvider requires authenticated user");
+  }
 
   const updateBalance = (amount: number) => {
-    setUser((prev) => ({
-      ...prev,
-      balance: Math.max(0, prev.balance + amount),
-    }));
+    updateUserStats(user.id, {
+      balance: Math.max(0, user.balance + amount),
+    });
   };
 
   const recordWin = (amount: number) => {
-    setUser((prev) => ({
-      ...prev,
-      balance: prev.balance + amount,
-      totalWinnings: prev.totalWinnings + amount,
-    }));
+    updateUserStats(user.id, {
+      balance: user.balance + amount,
+      totalWinnings: user.totalWinnings + amount,
+    });
   };
 
   const recordLoss = (amount: number) => {
-    setUser((prev) => ({
-      ...prev,
-      balance: Math.max(0, prev.balance - amount),
-      totalLosses: prev.totalLosses + amount,
-    }));
+    updateUserStats(user.id, {
+      balance: Math.max(0, user.balance - amount),
+      totalLosses: user.totalLosses + amount,
+    });
   };
 
   const recordGame = () => {
-    setUser((prev) => ({
-      ...prev,
-      gamesPlayed: prev.gamesPlayed + 1,
-    }));
+    updateUserStats(user.id, {
+      gamesPlayed: user.gamesPlayed + 1,
+    });
   };
 
   const resetBalance = () => {
-    setUser((prev) => ({
-      ...prev,
-      balance: INITIAL_USER.balance,
-    }));
+    updateUserStats(user.id, {
+      balance: 10000,
+    });
   };
 
   const updateUsername = (username: string) => {
-    setUser((prev) => ({
-      ...prev,
+    updateUserStats(user.id, {
       username: username.trim(),
-    }));
+    });
   };
 
   return (
