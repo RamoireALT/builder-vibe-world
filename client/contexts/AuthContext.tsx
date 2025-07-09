@@ -6,6 +6,28 @@ import {
   ReactNode,
 } from "react";
 
+export interface GameHistory {
+  id: string;
+  game: string;
+  bet: number;
+  result: "win" | "loss";
+  winAmount: number;
+  multiplier?: number;
+  timestamp: string;
+}
+
+export interface ReferralCode {
+  id: string;
+  code: string;
+  createdBy: string;
+  createdFor?: string;
+  balance: number;
+  usedBy?: string;
+  usedAt?: string;
+  isActive: boolean;
+  createdAt: string;
+}
+
 export interface User {
   id: string;
   username: string;
@@ -15,6 +37,13 @@ export interface User {
   totalLosses: number;
   gamesPlayed: number;
   achievements: string[];
+  gameHistory: GameHistory[];
+  winStreak: number;
+  maxWinStreak: number;
+  lossStreak: number;
+  maxLossStreak: number;
+  referralCode?: string;
+  usedReferralCode?: string;
   isAdmin: boolean;
   createdAt: string;
   lastLogin: string;
