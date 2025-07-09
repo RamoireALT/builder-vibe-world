@@ -4,8 +4,13 @@ import { useAuth, User } from "./AuthContext";
 interface UserContextType {
   user: User;
   updateBalance: (amount: number) => void;
-  recordWin: (amount: number) => void;
-  recordLoss: (amount: number) => void;
+  recordWin: (
+    amount: number,
+    game?: string,
+    bet?: number,
+    multiplier?: number,
+  ) => void;
+  recordLoss: (amount: number, game?: string) => void;
   recordGame: () => void;
   resetBalance: () => void;
   updateUsername: (username: string) => void;
