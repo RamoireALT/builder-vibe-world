@@ -374,18 +374,25 @@ export default function Profile() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {getAchievements().map((achievement, index) => (
+                  {user.achievements.map((achievement, index) => (
                     <div
                       key={index}
-                      className="flex items-center space-x-3 p-2 bg-casino-gold/10 rounded-lg"
+                      className="flex items-center space-x-3 p-3 bg-casino-gold/10 rounded-lg border border-casino-gold/30"
                     >
-                      <Trophy className="h-5 w-5 text-casino-gold" />
-                      <span className="text-white font-semibold">
-                        {achievement}
+                      <span className="text-2xl">
+                        {getAchievementIcon(achievement)}
                       </span>
+                      <div className="flex-1">
+                        <p className="text-white font-semibold">
+                          {achievement}
+                        </p>
+                        <p className="text-xs text-white/70">
+                          {getAchievementDescription(achievement)}
+                        </p>
+                      </div>
                     </div>
                   ))}
-                  {getAchievements().length === 0 && (
+                  {user.achievements.length === 0 && (
                     <p className="text-white/50 text-center py-4">
                       Play games to earn achievements!
                     </p>
