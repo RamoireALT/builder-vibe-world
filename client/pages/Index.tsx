@@ -46,7 +46,7 @@ export default function Index() {
       maxBet: 2500,
       icon: <Spade className="h-8 w-8" />,
       color: "casino-red",
-      available: false,
+      available: true,
     },
     {
       id: "tower",
