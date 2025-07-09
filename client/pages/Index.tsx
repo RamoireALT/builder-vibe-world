@@ -19,6 +19,8 @@ import {
   TrendingUp,
   Trophy,
   Coins,
+  LogOut,
+  Shield,
 } from "lucide-react";
 
 export default function Index() {
