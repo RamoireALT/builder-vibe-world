@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext";
 import Index from "./pages/Index";
 import Coinflip from "./pages/Coinflip";
+import Profile from "./pages/Profile";
 import ComingSoon from "./pages/ComingSoon";
 import NotFound from "./pages/NotFound";
 
