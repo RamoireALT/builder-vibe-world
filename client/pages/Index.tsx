@@ -115,7 +115,7 @@ export default function Index() {
       <section className="py-16 text-center">
         <div className="container mx-auto px-4">
           <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-casino-gold via-casino-gold-dark to-casino-red bg-clip-text text-transparent">
-            Welcome to Royal Casino
+            Welcome to WENDER Casino
           </h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Experience the thrill of casino gaming with virtual currency. Play
