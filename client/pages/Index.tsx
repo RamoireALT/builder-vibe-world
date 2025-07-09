@@ -224,7 +224,7 @@ export default function Index() {
       <footer className="bg-casino-black/80 border-t border-casino-gold/20 py-8 mt-16">
         <div className="container mx-auto px-4 text-center">
           <p className="text-white/70 mb-2">
-            🎰 Royal Casino - Educational Gaming Platform
+            🎰 WENDER Casino - Educational Gaming Platform
           </p>
           <p className="text-sm text-white/50">
             This is a virtual casino for educational purposes only. No real
