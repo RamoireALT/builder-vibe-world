@@ -108,12 +108,12 @@ export default function ComingSoon() {
                     Return to Lobby
                   </Button>
                 </Link>
-                <Link to="/games/slots">
+                <Link to="/games/coinflip">
                   <Button
                     variant="outline"
                     className="border-casino-red text-casino-red hover:bg-casino-red hover:text-white"
                   >
-                    Play Slot Machine
+                    Play Coinflip
                   </Button>
                 </Link>
               </div>
