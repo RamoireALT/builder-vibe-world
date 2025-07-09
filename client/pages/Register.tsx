@@ -43,13 +43,18 @@ export default function Register() {
     }
 
     setIsLoading(true);
-    const success = await register(username, email, password);
+    const result = await register(
+      username,
+      email,
+      password,
+      promoCode || undefined,
+    );
 
-    if (success) {
-      toast.success("Account created successfully! Welcome to WENDER Casino!");
+    if (result.success) {
+      toast.success(result.message);
       navigate("/");
     } else {
-      toast.error("Email already exists. Please use a different email.");
+      toast.error(result.message);
     }
     setIsLoading(false);
   };
