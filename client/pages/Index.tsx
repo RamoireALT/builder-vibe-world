@@ -84,7 +84,7 @@ export default function Index() {
             </div>
             <div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-casino-gold to-casino-gold-dark bg-clip-text text-transparent">
-                Royal Casino
+                WENDER Casino
               </h1>
               <p className="text-sm text-casino-gold/70">
                 Educational Gaming Platform
