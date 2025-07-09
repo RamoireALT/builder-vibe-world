@@ -161,6 +161,21 @@ export default function Register() {
                 </div>
               </div>
 
+              <div className="space-y-2">
+                <Label htmlFor="promoCode" className="text-white">
+                  Promo Code (Optional)
+                </Label>
+                <Input
+                  id="promoCode"
+                  type="text"
+                  placeholder="Enter promo code for bonus"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  className="bg-casino-black-light border-casino-gold/30 text-white placeholder:text-white/50"
+                  disabled={isLoading}
+                />
+              </div>
+
               <Button
                 type="submit"
                 disabled={isLoading}
