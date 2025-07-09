@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useUser } from "../contexts/UserContext";
+import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import {
