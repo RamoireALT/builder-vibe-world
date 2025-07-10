@@ -56,7 +56,7 @@ export default function Index() {
       maxBet: 5000,
       icon: <TrendingUp className="h-8 w-8" />,
       color: "casino-green",
-      available: false,
+      available: true,
     },
     {
       id: "blackjack",
