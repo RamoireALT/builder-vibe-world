@@ -61,12 +61,14 @@ export default function AdminPanel() {
     totalLosses: 0,
     gamesPlayed: 0,
   });
-  const [showCreateCodeDialog, setShowCreateCodeDialog] = useState(false);
-  const [newCodeForm, setNewCodeForm] = useState({
+  const [showCreatePromoDialog, setShowCreatePromoDialog] = useState(false);
+  const [showCreateReferralDialog, setShowCreateReferralDialog] =
+    useState(false);
+  const [newPromoForm, setNewPromoForm] = useState({
     code: "",
     balance: 100,
-    createdFor: "",
   });
+  const [selectedUserForReferral, setSelectedUserForReferral] = useState("");
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
