@@ -386,27 +386,99 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const createReferralCode = (
-    code: string,
-    balance: number,
-    createdFor?: string,
-  ): boolean => {
-    if (referralCodes.find((r) => r.code === code)) {
+  const createPromoCode = (code: string, balance: number): boolean => {
+    if (promoCodes.find((p) => p.code === code)) {
       return false; // Code already exists
+    }
+
+    const newCode: PromoCode = {
+      id: Date.now().toString(),
+      code,
+      createdBy: user?.id || "admin",
+      balance,
+      isActive: true,
+      isOneTimeUse: true, // Default to one-time use
+      createdAt: new Date().toISOString(),
+    };
+
+    setPromoCodes((prev) => [...prev, newCode]);
+    return true;
+  };
+
+  const createReferralCode = (ownerId: string): string => {
+    const owner = users.find((u) => u.id === ownerId);
+    if (!owner) return "";
+
+    // Generate unique code based on username
+    const baseCode = owner.username.toUpperCase().replace(/[^A-Z0-9]/g, "");
+    let code = baseCode;
+    let counter = 1;
+
+    // Ensure uniqueness
+    while (referralCodes.find((r) => r.code === code)) {
+      code = `${baseCode}${counter}`;
+      counter++;
     }
 
     const newCode: ReferralCode = {
       id: Date.now().toString(),
       code,
-      createdBy: user?.id || "admin",
-      createdFor,
-      balance,
+      ownerId,
+      ownerUsername: owner.username,
+      totalEarnings: 0,
+      usageCount: 0,
       isActive: true,
       createdAt: new Date().toISOString(),
     };
 
     setReferralCodes((prev) => [...prev, newCode]);
-    return true;
+
+    // Give owner the "Influence" achievement
+    updateUserStats(ownerId, {
+      referralCode: code,
+      achievements: owner.achievements.includes("Influence")
+        ? owner.achievements
+        : [...owner.achievements, "Influence"],
+    });
+
+    return code;
+  };
+
+  const usePromoCode = (
+    userId: string,
+    code: string,
+  ): { success: boolean; message: string } => {
+    const foundCode = promoCodes.find((p) => p.code === code && p.isActive);
+
+    if (!foundCode) {
+      return { success: false, message: "Invalid promo code" };
+    }
+
+    if (foundCode.isOneTimeUse && foundCode.usedBy) {
+      return { success: false, message: "Promo code already used" };
+    }
+
+    // Apply the promo code
+    updateUserStats(userId, {
+      balance: (user?.balance || 0) + foundCode.balance,
+      usedPromoCode: code,
+    });
+
+    // Mark code as used if it's one-time use
+    if (foundCode.isOneTimeUse) {
+      setPromoCodes((prev) =>
+        prev.map((p) =>
+          p.code === code
+            ? { ...p, usedBy: userId, usedAt: new Date().toISOString() }
+            : p,
+        ),
+      );
+    }
+
+    return {
+      success: true,
+      message: `Successfully redeemed $${foundCode.balance}!`,
+    };
   };
 
   const useReferralCode = (
@@ -419,33 +491,74 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return { success: false, message: "Invalid referral code" };
     }
 
-    if (foundCode.usedBy) {
-      return { success: false, message: "Referral code already used" };
+    const targetUser = users.find((u) => u.id === userId);
+    if (!targetUser) {
+      return { success: false, message: "User not found" };
     }
 
-    if (foundCode.createdFor && foundCode.createdFor !== userId) {
-      return { success: false, message: "This referral code is not for you" };
+    if (targetUser.usedReferralCode) {
+      return {
+        success: false,
+        message: "You have already used a referral code",
+      };
     }
 
-    // Apply the referral code
+    if (foundCode.ownerId === userId) {
+      return {
+        success: false,
+        message: "You cannot use your own referral code",
+      };
+    }
+
+    // Apply the referral code - gives 5% deposit bonus
     updateUserStats(userId, {
-      balance: (user?.balance || 0) + foundCode.balance,
       usedReferralCode: code,
+      depositBonus: 5, // 5% bonus on future deposits
     });
 
-    // Mark code as used
+    // Update referral code usage count
     setReferralCodes((prev) =>
       prev.map((r) =>
-        r.code === code
-          ? { ...r, usedBy: userId, usedAt: new Date().toISOString() }
-          : r,
+        r.code === code ? { ...r, usageCount: r.usageCount + 1 } : r,
       ),
     );
 
     return {
       success: true,
-      message: `Successfully redeemed $${foundCode.balance}!`,
+      message:
+        "Referral code applied! You now get 5% bonus on deposits and the referrer gets 10% of your wins!",
     };
+  };
+
+  const processReferralWin = (userId: string, winAmount: number) => {
+    const targetUser = users.find((u) => u.id === userId);
+    if (!targetUser?.usedReferralCode) return;
+
+    const referralCode = referralCodes.find(
+      (r) => r.code === targetUser.usedReferralCode,
+    );
+    if (!referralCode) return;
+
+    const referralBonus = Math.floor(winAmount * 0.1); // 10% of win goes to referrer
+
+    // Add bonus to referral code owner
+    updateUserStats(referralCode.ownerId, {
+      balance:
+        (users.find((u) => u.id === referralCode.ownerId)?.balance || 0) +
+        referralBonus,
+      referralEarnings:
+        (users.find((u) => u.id === referralCode.ownerId)?.referralEarnings ||
+          0) + referralBonus,
+    });
+
+    // Update referral code total earnings
+    setReferralCodes((prev) =>
+      prev.map((r) =>
+        r.code === targetUser.usedReferralCode
+          ? { ...r, totalEarnings: r.totalEarnings + referralBonus }
+          : r,
+      ),
+    );
   };
 
   const checkAchievements = (userId: string) => {
