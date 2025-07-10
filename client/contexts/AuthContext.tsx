@@ -55,6 +55,9 @@ export interface User {
   maxLossStreak: number;
   referralCode?: string;
   usedReferralCode?: string;
+  usedPromoCode?: string;
+  referralEarnings: number;
+  depositBonus: number; // 5% bonus from referral
   isAdmin: boolean;
   createdAt: string;
   lastLogin: string;
