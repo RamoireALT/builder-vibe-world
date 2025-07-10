@@ -274,21 +274,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // Check promo code if provided
     if (promoCode) {
-      const validCode = referralCodes.find(
-        (r) => r.code === promoCode && r.isActive && !r.usedBy,
+      const validCode = promoCodes.find(
+        (p) =>
+          p.code === promoCode && p.isActive && (!p.isOneTimeUse || !p.usedBy),
       );
       if (validCode) {
         bonusBalance = validCode.balance;
         usedPromoCode = promoCode;
 
-        // Mark promo code as used (for single-use codes)
-        setReferralCodes((prev) =>
-          prev.map((r) =>
-            r.code === promoCode
-              ? { ...r, usedBy: email, usedAt: new Date().toISOString() }
-              : r,
-          ),
-        );
+        // Mark promo code as used (for single-use codes only)
+        if (validCode.isOneTimeUse) {
+          setPromoCodes((prev) =>
+            prev.map((p) =>
+              p.code === promoCode
+                ? { ...p, usedBy: email, usedAt: new Date().toISOString() }
+                : p,
+            ),
+          );
+        }
       } else {
         return {
           success: false,
