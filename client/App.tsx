@@ -80,7 +80,7 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <UserProvider>
-                    <ComingSoon />
+                    <Tower />
                   </UserProvider>
                 </ProtectedRoute>
               }
