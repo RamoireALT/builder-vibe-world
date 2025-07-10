@@ -67,6 +67,7 @@ interface AuthContextType {
   user: User | null;
   users: User[];
   referralCodes: ReferralCode[];
+  promoCodes: PromoCode[];
   isAuthenticated: boolean;
   isAdmin: boolean;
   login: (email: string, password: string) => Promise<boolean>;
@@ -82,15 +83,17 @@ interface AuthContextType {
     userId: string,
     gameData: Omit<GameHistory, "id" | "timestamp">,
   ) => void;
-  createReferralCode: (
+  createPromoCode: (code: string, balance: number) => boolean;
+  createReferralCode: (ownerId: string) => string;
+  usePromoCode: (
+    userId: string,
     code: string,
-    balance: number,
-    createdFor?: string,
-  ) => boolean;
+  ) => { success: boolean; message: string };
   useReferralCode: (
     userId: string,
     code: string,
   ) => { success: boolean; message: string };
+  processReferralWin: (userId: string, winAmount: number) => void;
   checkAchievements: (userId: string) => void;
   deleteUser: (userId: string) => void;
   getAllUsers: () => User[];
