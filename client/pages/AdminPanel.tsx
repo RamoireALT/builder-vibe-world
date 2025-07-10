@@ -242,45 +242,45 @@ export default function AdminPanel() {
           </Card>
         </div>
 
-        {/* Referral Codes Management */}
+        {/* Promo Codes Management */}
         <Card className="bg-casino-black/60 border-casino-gold/30">
           <CardHeader>
             <CardTitle className="text-casino-gold flex items-center justify-between">
-              <span>Referral Codes</span>
+              <span>Promo Codes</span>
               <Dialog
-                open={showCreateCodeDialog}
-                onOpenChange={setShowCreateCodeDialog}
+                open={showCreatePromoDialog}
+                onOpenChange={setShowCreatePromoDialog}
               >
                 <DialogTrigger asChild>
                   <Button
                     size="sm"
-                    className="bg-casino-purple hover:bg-casino-purple-dark"
+                    className="bg-casino-green hover:bg-casino-green-dark"
                   >
                     <UserPlus className="h-4 w-4 mr-2" />
-                    Create Code
+                    Create Promo Code
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="bg-casino-black border-casino-gold/30">
                   <DialogHeader>
                     <DialogTitle className="text-casino-gold">
-                      Create Referral Code
+                      Create Promo Code
                     </DialogTitle>
                     <DialogDescription className="text-white/70">
-                      Create a new referral code for users to claim bonuses
+                      Create a one-time use promo code for registration bonuses
                     </DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <Label className="text-white">Code</Label>
                       <Input
-                        value={newCodeForm.code}
+                        value={newPromoForm.code}
                         onChange={(e) =>
-                          setNewCodeForm({
-                            ...newCodeForm,
+                          setNewPromoForm({
+                            ...newPromoForm,
                             code: e.target.value,
                           })
                         }
-                        placeholder="Enter unique code"
+                        placeholder="Enter unique promo code"
                         className="bg-casino-black-light border-casino-gold/30 text-white"
                       />
                     </div>
@@ -288,10 +288,10 @@ export default function AdminPanel() {
                       <Label className="text-white">Balance Bonus</Label>
                       <Input
                         type="number"
-                        value={newCodeForm.balance}
+                        value={newPromoForm.balance}
                         onChange={(e) =>
-                          setNewCodeForm({
-                            ...newCodeForm,
+                          setNewPromoForm({
+                            ...newPromoForm,
                             balance: Number(e.target.value),
                           })
                         }
@@ -299,42 +299,26 @@ export default function AdminPanel() {
                         className="bg-casino-black-light border-casino-gold/30 text-white"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label className="text-white">
-                        Created For (Optional)
-                      </Label>
-                      <Input
-                        value={newCodeForm.createdFor}
-                        onChange={(e) =>
-                          setNewCodeForm({
-                            ...newCodeForm,
-                            createdFor: e.target.value,
-                          })
-                        }
-                        placeholder="Specific user ID (leave empty for anyone)"
-                        className="bg-casino-black-light border-casino-gold/30 text-white"
-                      />
-                    </div>
                   </div>
                   <DialogFooter>
                     <Button
                       variant="outline"
-                      onClick={() => setShowCreateCodeDialog(false)}
+                      onClick={() => setShowCreatePromoDialog(false)}
                     >
                       Cancel
                     </Button>
                     <Button
-                      onClick={handleCreateReferralCode}
-                      className="bg-casino-purple hover:bg-casino-purple-dark"
+                      onClick={handleCreatePromoCode}
+                      className="bg-casino-green hover:bg-casino-green-dark"
                     >
-                      Create Code
+                      Create Promo Code
                     </Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
             </CardTitle>
             <CardDescription className="text-white/70">
-              Manage referral codes and promo codes
+              One-time use codes for registration bonuses
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -343,9 +327,8 @@ export default function AdminPanel() {
                 <TableHeader>
                   <TableRow className="border-casino-gold/20">
                     <TableHead className="text-casino-gold">Code</TableHead>
-                    <TableHead className="text-casino-gold">Balance</TableHead>
                     <TableHead className="text-casino-gold">
-                      Created For
+                      Balance Bonus
                     </TableHead>
                     <TableHead className="text-casino-gold">Used By</TableHead>
                     <TableHead className="text-casino-gold">Status</TableHead>
@@ -353,7 +336,7 @@ export default function AdminPanel() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {referralCodes.map((code) => (
+                  {promoCodes.map((code) => (
                     <TableRow
                       key={code.id}
                       className="border-casino-gold/10 hover:bg-casino-black/30"
@@ -363,9 +346,6 @@ export default function AdminPanel() {
                       </TableCell>
                       <TableCell className="text-casino-green">
                         {formatCurrency(code.balance)}
-                      </TableCell>
-                      <TableCell className="text-white/80">
-                        {code.createdFor || "Anyone"}
                       </TableCell>
                       <TableCell className="text-white/80">
                         {code.usedBy || "Not used"}
@@ -380,6 +360,134 @@ export default function AdminPanel() {
                           }
                         >
                           {code.usedBy ? "Used" : "Active"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-white/70">
+                        {formatDate(code.createdAt)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Referral Codes Management */}
+        <Card className="bg-casino-black/60 border-casino-gold/30">
+          <CardHeader>
+            <CardTitle className="text-casino-gold flex items-center justify-between">
+              <span>Referral Codes</span>
+              <Dialog
+                open={showCreateReferralDialog}
+                onOpenChange={setShowCreateReferralDialog}
+              >
+                <DialogTrigger asChild>
+                  <Button
+                    size="sm"
+                    className="bg-casino-purple hover:bg-casino-purple-dark"
+                  >
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Create Referral Code
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-casino-black border-casino-gold/30">
+                  <DialogHeader>
+                    <DialogTitle className="text-casino-gold">
+                      Create Referral Code
+                    </DialogTitle>
+                    <DialogDescription className="text-white/70">
+                      Create a referral code for a specific user (gives them 5%
+                      deposit bonus and earns from referrals)
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label className="text-white">Select User</Label>
+                      <select
+                        value={selectedUserForReferral}
+                        onChange={(e) =>
+                          setSelectedUserForReferral(e.target.value)
+                        }
+                        className="w-full p-2 bg-casino-black-light border border-casino-gold/30 text-white rounded"
+                      >
+                        <option value="">Select a user...</option>
+                        {users
+                          .filter((u) => !u.isAdmin && !u.referralCode)
+                          .map((user) => (
+                            <option key={user.id} value={user.id}>
+                              {user.username} ({user.email})
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowCreateReferralDialog(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={handleCreateReferralCode}
+                      className="bg-casino-purple hover:bg-casino-purple-dark"
+                    >
+                      Create Referral Code
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </CardTitle>
+            <CardDescription className="text-white/70">
+              Referral codes linked to specific users (ongoing benefits)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-casino-gold/20">
+                    <TableHead className="text-casino-gold">Code</TableHead>
+                    <TableHead className="text-casino-gold">Owner</TableHead>
+                    <TableHead className="text-casino-gold">
+                      Total Earnings
+                    </TableHead>
+                    <TableHead className="text-casino-gold">
+                      Usage Count
+                    </TableHead>
+                    <TableHead className="text-casino-gold">Status</TableHead>
+                    <TableHead className="text-casino-gold">Created</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {referralCodes.map((code) => (
+                    <TableRow
+                      key={code.id}
+                      className="border-casino-gold/10 hover:bg-casino-black/30"
+                    >
+                      <TableCell className="text-white font-semibold">
+                        {code.code}
+                      </TableCell>
+                      <TableCell className="text-casino-gold">
+                        {code.ownerUsername}
+                      </TableCell>
+                      <TableCell className="text-casino-green">
+                        {formatCurrency(code.totalEarnings)}
+                      </TableCell>
+                      <TableCell className="text-casino-purple">
+                        {code.usageCount}
+                      </TableCell>
+                      <TableCell>
+                        <Badge
+                          variant="secondary"
+                          className={
+                            code.isActive
+                              ? "bg-casino-green/20 text-casino-green"
+                              : "bg-casino-red/20 text-casino-red"
+                          }
+                        >
+                          {code.isActive ? "Active" : "Inactive"}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-white/70">
