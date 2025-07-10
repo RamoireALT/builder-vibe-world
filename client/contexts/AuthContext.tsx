@@ -115,6 +115,8 @@ const INITIAL_USER_DATA = {
   maxWinStreak: 0,
   lossStreak: 0,
   maxLossStreak: 0,
+  referralEarnings: 0,
+  depositBonus: 0,
 };
 
 const ACHIEVEMENTS = {
