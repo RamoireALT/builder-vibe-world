@@ -153,6 +153,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       : [];
     setReferralCodes(parsedReferralCodes);
 
+    // Load promo codes from localStorage
+    const savedPromoCodes = localStorage.getItem("casino-promo-codes");
+    const parsedPromoCodes = savedPromoCodes ? JSON.parse(savedPromoCodes) : [];
+    setPromoCodes(parsedPromoCodes);
+
     // Check if user is logged in
     const savedCurrentUser = localStorage.getItem("casino-current-user");
     if (savedCurrentUser) {
