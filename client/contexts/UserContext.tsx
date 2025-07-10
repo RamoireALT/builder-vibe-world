@@ -44,6 +44,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
       totalWinnings: user.totalWinnings + amount,
     });
 
+    // Process referral bonus if user has a referral code
+    processReferralWin(user.id, amount);
+
     // Add to game history
     addGameToHistory(user.id, {
       game,
