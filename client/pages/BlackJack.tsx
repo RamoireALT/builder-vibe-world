@@ -261,12 +261,14 @@ export default function BlackJack() {
     setGameResult(result);
 
     if (winAmount > 0) {
-      const netWin = winAmount - bet;
-      if (netWin > 0) {
-        recordWin(netWin, "BlackJack", bet, winAmount / bet);
+      if (winAmount > bet) {
+        // Player won - give them the total winnings (which includes their bet back)
+        const netProfit = winAmount - bet; // Just the profit portion
+        recordWin(winAmount, "BlackJack", bet, winAmount / bet);
         toast.success(`🎉 ${result} Won ${formatCurrency(winAmount)}!`);
       } else {
-        recordWin(bet, "BlackJack", bet, 1); // Return bet on tie
+        // Push/Tie - just return the bet
+        recordWin(bet, "BlackJack", bet, 1);
         toast.success(`🤝 ${result} Bet returned!`);
       }
     } else {
