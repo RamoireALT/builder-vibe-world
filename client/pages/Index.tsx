@@ -66,7 +66,7 @@ export default function Index() {
       maxBet: 2500,
       icon: <Heart className="h-8 w-8" />,
       color: "casino-purple",
-      available: false,
+      available: true,
     },
   ];
 
