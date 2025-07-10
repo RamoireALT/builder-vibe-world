@@ -138,6 +138,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [referralCodes, setReferralCodes] = useState<ReferralCode[]>([]);
+  const [promoCodes, setPromoCodes] = useState<PromoCode[]>([]);
 
   useEffect(() => {
     // Load users from localStorage
