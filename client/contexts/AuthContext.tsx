@@ -16,14 +16,25 @@ export interface GameHistory {
   timestamp: string;
 }
 
-export interface ReferralCode {
+export interface PromoCode {
   id: string;
   code: string;
   createdBy: string;
-  createdFor?: string;
   balance: number;
   usedBy?: string;
   usedAt?: string;
+  isActive: boolean;
+  isOneTimeUse: boolean;
+  createdAt: string;
+}
+
+export interface ReferralCode {
+  id: string;
+  code: string;
+  ownerId: string;
+  ownerUsername: string;
+  totalEarnings: number;
+  usageCount: number;
   isActive: boolean;
   createdAt: string;
 }
