@@ -46,8 +46,10 @@ export default function AdminPanel() {
     user,
     users,
     referralCodes,
+    promoCodes,
     updateUserStats,
     deleteUser,
+    createPromoCode,
     createReferralCode,
     logout,
   } = useAuth();
