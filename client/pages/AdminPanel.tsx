@@ -114,24 +114,37 @@ export default function AdminPanel() {
     toast.success("User deleted successfully!");
   };
 
-  const handleCreateReferralCode = () => {
-    if (!newCodeForm.code || newCodeForm.balance <= 0) {
+  const handleCreatePromoCode = () => {
+    if (!newPromoForm.code || newPromoForm.balance <= 0) {
       toast.error("Please enter a valid code and balance");
       return;
     }
 
-    const success = createReferralCode(
-      newCodeForm.code,
-      newCodeForm.balance,
-      newCodeForm.createdFor || undefined,
-    );
+    const success = createPromoCode(newPromoForm.code, newPromoForm.balance);
 
     if (success) {
-      toast.success("Referral code created successfully!");
-      setShowCreateCodeDialog(false);
-      setNewCodeForm({ code: "", balance: 100, createdFor: "" });
+      toast.success("Promo code created successfully!");
+      setShowCreatePromoDialog(false);
+      setNewPromoForm({ code: "", balance: 100 });
     } else {
-      toast.error("Referral code already exists!");
+      toast.error("Promo code already exists!");
+    }
+  };
+
+  const handleCreateReferralCode = () => {
+    if (!selectedUserForReferral) {
+      toast.error("Please select a user for the referral code");
+      return;
+    }
+
+    const code = createReferralCode(selectedUserForReferral);
+
+    if (code) {
+      toast.success(`Referral code "${code}" created successfully!`);
+      setShowCreateReferralDialog(false);
+      setSelectedUserForReferral("");
+    } else {
+      toast.error("Failed to create referral code!");
     }
   };
 
