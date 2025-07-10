@@ -306,7 +306,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email,
       ...INITIAL_USER_DATA,
       balance: bonusBalance,
-      usedReferralCode: usedPromoCode,
+      usedPromoCode: usedPromoCode,
       isAdmin: false,
       createdAt: new Date().toISOString(),
       lastLogin: new Date().toISOString(),
