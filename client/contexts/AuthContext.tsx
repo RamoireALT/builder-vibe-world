@@ -184,21 +184,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     // Create default "Release" promo code if it doesn't exist
-    if (!parsedReferralCodes.find((r: ReferralCode) => r.code === "Release")) {
-      const releaseCode: ReferralCode = {
+    if (!parsedPromoCodes.find((p: PromoCode) => p.code === "Release")) {
+      const releaseCode: PromoCode = {
         id: "release-promo",
         code: "Release",
         createdBy: "admin",
         balance: 100,
         isActive: true,
+        isOneTimeUse: false, // Can be used multiple times
         createdAt: new Date().toISOString(),
       };
-      const updatedCodes = [...parsedReferralCodes, releaseCode];
-      setReferralCodes(updatedCodes);
-      localStorage.setItem(
-        "casino-referral-codes",
-        JSON.stringify(updatedCodes),
-      );
+      const updatedCodes = [...parsedPromoCodes, releaseCode];
+      setPromoCodes(updatedCodes);
+      localStorage.setItem("casino-promo-codes", JSON.stringify(updatedCodes));
     }
   }, []);
 
